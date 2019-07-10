@@ -26,7 +26,18 @@ namespace PicDecode
 
             UInt16 sig = GetWord();
 
-            if ((sig & 0xff) != 0x58 )      // 'X'
+            // Knights of the Sky has two different PIC files with different offset.
+            // Let's try to see if it's a flat file first, then we test the two offsets.
+
+            if ((sig & 0xff) != 0x58)      // 'X'
+                dataOffset = 0x20C;
+
+            sig = GetWord();
+            if ((sig & 0xff) != 0x58)      // 'X'
+                dataOffset = 0x512;
+
+            sig = GetWord();
+            if ((sig & 0xff) != 0x58)      // 'X'
                 throw new Exception("Invalid PIC format!");
 
             /// Engine also support other formats, but we don't support it since all .pics are "X" format
