@@ -1,15 +1,13 @@
 # PicDecoder
 
-Microprose classic games .PIC file format decoder (particulary from Magic: The Gathering 1997).
+Microprose classic games .PIC file format decoder.
 
-I spend several hours figuring out how this crazy decoding work :p  (PicReveresing.c)
+This is a fork which aim is to read and save .PIC files from Knights of the Sky.
 
-First, load appropriate .TR palette:
+First, load appropriate .PAL palette:
 
 ![Palette View](/images/palview.jpg)
 
 And now you can load .PIC images:
 
 ![PIC View](/images/picview.jpg)
-
-Enjoy!
