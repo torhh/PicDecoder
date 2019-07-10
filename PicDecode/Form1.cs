@@ -32,6 +32,7 @@ namespace PicDecode
 #endif
 
             SetupGrayPalette();
+            saveAsToolStripMenuItem.Enabled = false;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -71,6 +72,8 @@ namespace PicDecode
                 SavedPic = File.ReadAllBytes(openFileDialog1.FileName);
 
                 ShowPic(SavedPic);
+
+                saveAsToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -125,6 +128,14 @@ namespace PicDecode
 
             paletteView.ShowDialog();
         }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
+                pictureBox1.Image.Save(saveFileDialog1.FileName);
+            }
+        }
     }
+
 
 }
