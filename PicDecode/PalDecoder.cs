@@ -23,75 +23,28 @@ namespace PicDecode
             }
         }
 
-        public PalDecoder (string [] text)
+        public PalDecoder (byte [] data)
         {
             int index = 0;
+            byte rValue, gValue, bValue;
 
             ResetPalette();
 
-            foreach (string line in text)
-            {
-                int format = line.Count(f => f == '-');
+            if (data.Length != 768) {
+                throw new Exception("Invalid palette entry!");
+            }
 
-                Regex regex;
+            for (index = 0; index < 256; index++) {
 
-                if (format == 1)         // Non-indexed format
-                {
-                    regex = new Regex(@"(?<r>[\d]+[\s]*)(?<g>[\s]*[\d]+[\s]*)(?<b>[\s]*[\d]+[\s]*[-])");
-                }
-                else if (format == 2)        // Indexed format
-                {
-                    regex = new Regex(@"(?<index>[\d]+[\s]*[-]{1})(?<r>[\s]*[\d]+[\s]*)(?<g>[\s]*[\d]+[\s]*)(?<b>[\s]*[\d]+[\s]*[-])");
-                }
-                else
-                {
-                    throw new Exception("Invalid palette format!");
-                }
+                rValue = data[(index * 3)] <<= 2;
+                gValue = data[(index * 3) + 1] <<= 2;
+                bValue = data[(index * 3) + 2] <<= 2;
 
-                var matches = regex.Matches(line);
-
-                byte rValue, gValue, bValue;
-
-                if (matches.Count == 1)
-                {
-                    string rStr, gStr, bStr;
-
-                    if (format == 1)
-                    {
-                        rStr = matches[0].Groups[1].Value.Replace("-", "").Trim();
-                        gStr = matches[0].Groups[2].Value.Replace("-", "").Trim();
-                        bStr = matches[0].Groups[3].Value.Replace("-", "").Trim();
-
-                        index++;
-                    }
-                    else if (format == 2)
-                    {
-                        string indexStr = matches[0].Groups[1].Value.Replace ("-", "").Trim();
-                        index = Convert.ToInt16(indexStr);
-
-                        rStr = matches[0].Groups[2].Value.Replace("-", "").Trim();
-                        gStr = matches[0].Groups[3].Value.Replace("-", "").Trim();
-                        bStr = matches[0].Groups[4].Value.Replace("-", "").Trim();
-                    }
-                    else
-                    {
-                        rStr = gStr = bStr = index.ToString();
-                        index++;
-                    }
-
-                    rValue = Convert.ToByte(rStr);
-                    gValue = Convert.ToByte(gStr);
-                    bValue = Convert.ToByte(bStr);
-
-                    Palette[index] = Color.FromArgb(rValue, gValue, bValue);
-                }
-                else
-                {
-                    throw new Exception("Invalid palette entry!");
-                }
+                Palette[index] = Color.FromArgb(rValue, gValue, bValue);
             }
 
         }
+        
 
 
     }

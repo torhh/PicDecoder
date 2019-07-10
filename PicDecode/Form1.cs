@@ -94,7 +94,6 @@ namespace PicDecode
                     bitmap.SetPixel(x, y, palette[value]);
                 }
             }
-
             pictureBox1.Image = bitmap;
         }
 
@@ -107,9 +106,9 @@ namespace PicDecode
         {
             if ( openFileDialog2.ShowDialog() == DialogResult.OK )
             {
-                string [] text = File.ReadAllLines(openFileDialog2.FileName);
+                byte[] data = File.ReadAllBytes(openFileDialog2.FileName);
 
-                PalDecoder decoder = new PalDecoder(text);
+                PalDecoder decoder = new PalDecoder(data);
 
                 palette = decoder.Palette;
 

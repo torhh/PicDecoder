@@ -106,7 +106,7 @@
             // openFileDialog2
             // 
             this.openFileDialog2.DefaultExt = "tr";
-            this.openFileDialog2.Filter = "Palette Files|*.tr|All Files|*.*";
+            this.openFileDialog2.Filter = "Palette Files|*.pal|All Files|*.*";
             // 
             // toolsToolStripMenuItem
             // 
