@@ -23,6 +23,8 @@ namespace PicDecode
         private Color[] palette = new Color[256];
         private byte[] SavedPic;
 
+        private string fileName;
+
         public Form1()
         {
             InitializeComponent();
@@ -86,6 +88,9 @@ namespace PicDecode
                 
                 
                 saveAsToolStripMenuItem.Enabled = true;
+
+                this.Text = "PIC View - " + openFileDialog1.SafeFileName;
+                fileName = openFileDialog1.SafeFileName;
             }
         }
 
@@ -143,6 +148,7 @@ namespace PicDecode
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
             {
+            saveFileDialog1.FileName = Path.GetFileNameWithoutExtension(fileName);
             if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
                 pictureBox1.Image.Save(saveFileDialog1.FileName);
             }
