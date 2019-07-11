@@ -60,6 +60,16 @@ namespace PicDecode
             }
         }
 
+        private void CheckForPalette(byte [] data)
+        {
+            PicDecoder decoder = new PicDecoder(data);
+            if (decoder.hasPalette) {
+                PalDecoder paldecoder = new PalDecoder(data, 6);
+                palette = paldecoder.Palette;
+            }
+
+        }
+
         /// <summary>
         /// Load and decode .PIC image
         /// </summary>
@@ -71,8 +81,10 @@ namespace PicDecode
             {
                 SavedPic = File.ReadAllBytes(openFileDialog1.FileName);
 
+                CheckForPalette(SavedPic);
                 ShowPic(SavedPic);
-
+                
+                
                 saveAsToolStripMenuItem.Enabled = true;
             }
         }

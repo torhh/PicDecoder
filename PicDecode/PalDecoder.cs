@@ -45,7 +45,22 @@ namespace PicDecode
 
         }
         
+        public PalDecoder(byte [] data, int offset)
+        {
+            ResetPalette();
 
+            int index = 0;
+            byte rValue, gValue, bValue;
+
+            for (index = 0; index < 256; index++) {
+
+                rValue = data[(index * 3) + offset] <<= 2;
+                gValue = data[(index * 3) + offset + 1] <<= 2;
+                bValue = data[(index * 3) + offset + 2] <<= 2;
+
+                Palette[index] = Color.FromArgb(rValue, gValue, bValue);
+            }
+        }
 
     }
 

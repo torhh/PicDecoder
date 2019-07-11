@@ -15,6 +15,7 @@ namespace PicDecode
         public int compressedSize;
 
         public bool bcdPacked;
+        public bool hasPalette;
 
         private byte[] savedData;
         private int dataOffset = 0;
@@ -28,6 +29,10 @@ namespace PicDecode
 
             // Knights of the Sky has two different PIC files with different offset.
             // Let's try to see if it's a flat file first, then we test the two offsets.
+
+            if ((sig & 0xFF) == 0x4D) {
+                hasPalette = true;
+            }
 
             if ((sig & 0xff) != 0x58) {    // 'X'
                 dataOffset = 0x20C;
